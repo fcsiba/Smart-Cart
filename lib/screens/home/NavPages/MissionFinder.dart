@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
@@ -170,7 +169,10 @@ class _MissionFinderState extends State<MissionFinder> {
                   initialCameraPosition: CameraPosition(
                     // target: _myMapPosition,
                     target: LatLng(
-                        missions.first.latitude, missions.first.longitude),
+                      // issue in first 
+                        // 1.234567,1.345678
+                        missions.first.latitude, missions.first.longitude
+                        ),
                     zoom: 16,
                   ),
                   markers: Set.from(allMarkers)..addAll(_cameraMarker),

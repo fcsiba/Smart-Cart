@@ -59,8 +59,8 @@ class _MissionDetailState extends State<MissionDetailPage> {
       context: context,
       template: TemplateGift,
     );
-    final newColor = Theme.of(context).primaryColor.withOpacity(1);
-    popup.recolor(newColor);
+    // final newColor = Theme.of(context).primaryColor.withOpacity(1);
+    // popup.recolor(newColor);
 
     super.initState();
   }
@@ -68,7 +68,7 @@ class _MissionDetailState extends State<MissionDetailPage> {
   @override
   Widget build(BuildContext context) {
     myUser = Provider.of<User>(context);
-    // TODO(Sualeh): Join Karnay pe test User jara hai..
+    // TODO: Join Karnay pe test User jara hai..
     // if (myUser.name == null) {
     //   myUser.name = "Test User";
     // }
