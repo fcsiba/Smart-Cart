@@ -10,20 +10,18 @@ class User {
   String password;
   String name;
   String profilePhoto;
+  String userType;
 
   User(
       {this.uid,
       this.name,
       this.profilePhoto,
       this.email,
-      this.password});
+      this.password,
+      this.userType,
+      });
 
   factory User.fromJson(Map json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
-
-
 }
-
-
-// phone  

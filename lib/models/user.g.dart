@@ -13,6 +13,7 @@ User _$UserFromJson(Map json) {
     profilePhoto: json['profilePhoto'],
     email: json['email'],
     password: json['password'],
+    userType: json['userType'],
   );
 }
 
@@ -22,4 +23,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'password': instance.password,
       'name': instance.name,
       'profilePhoto': instance.profilePhoto,
+      'userType': instance.userType,
     };

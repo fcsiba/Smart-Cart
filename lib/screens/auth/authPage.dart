@@ -40,7 +40,8 @@ class _AuthPageState extends State<AuthPage> {
   final emailfocus = FocusNode();
   final passwordfocus = FocusNode();
   final passwordReenterfocus = FocusNode();
-
+  String userType = '1';
+  bool isOrganization = false;
   @override
   Widget build(BuildContext context) {
     final scaffold = _globalKey.currentState;
@@ -302,8 +303,7 @@ class _AuthPageState extends State<AuthPage> {
               //   ),
               // );
               // print("Error: $error");
-            }
-            );
+            });
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
@@ -357,7 +357,7 @@ class _AuthPageState extends State<AuthPage> {
             });
 
             await _auth
-                .registerEmail(email, password, name.titleCase, profilePhoto)
+                .registerEmail(email, password, name.titleCase, profilePhoto, userType)
                 .catchError((error) {
               setState(() {
                 _isSignInLoading = false;
@@ -556,6 +556,23 @@ class _AuthPageState extends State<AuthPage> {
           },
         ));
 
+    Widget organization = Container(
+      width: width,
+      height: height,
+      child: CheckboxListTile(
+        title: Text("I am an Organization."),
+        value: isOrganization,
+        onChanged: (newValue) {
+          setState(() {
+            isOrganization = newValue;
+            userType = isOrganization ? '2' : '1';
+          });
+        },
+        controlAffinity:
+            ListTileControlAffinity.leading, //  <-- leading Checkbox
+      ),
+    );
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -602,7 +619,8 @@ class _AuthPageState extends State<AuthPage> {
                     // Re-enter password field
                     register ? SizedBox(height: 10) : SizedBox(),
                     register ? passwordReenterInput : SizedBox(),
-
+                    // Organization?
+                    register ? organization : SizedBox(),
                     // Animate buttonMain
                     signInAnimator,
                     // Show back button

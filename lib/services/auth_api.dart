@@ -34,7 +34,7 @@ class AuthApi {
       // Create a document in the User collection if doesn't exists.
       if (!await UserApi(uid: user.uid).userExists()) {
         await UserApi(uid: user.uid)
-            .setUserData(user.email, null, user.displayName, user.photoUrl);
+            .setUserData(user.email, null, user.displayName, user.photoUrl, "1");
       }
     } catch (e) {
       return Future.error(e);
@@ -51,13 +51,13 @@ class AuthApi {
   }
 
   // Register
-  Future<void> registerEmail(email, password, name, profilePhoto) async {
+  Future<void> registerEmail(email, password, name, profilePhoto, userType) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
       await UserApi(uid: user.uid)
-          .setUserData(email, password, name, profilePhoto);
+          .setUserData(email, password, name, profilePhoto, userType);
     } catch (e) {
       return Future.error(e);
     }

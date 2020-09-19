@@ -13,12 +13,13 @@ class UserApi {
   final CollectionReference userData = Firestore.instance.collection('users');
 
   Future setUserData(
-      String email, String password, String name, String profilePhoto) async {
+      String email, String password, String name, String profilePhoto, String userType) async {
     return await userData.document(uid).setData({
       "email": email,
       "password": password,
       "name": name,
       "profilePhoto": profilePhoto,
+      "userType": userType,
     });
   }
 
