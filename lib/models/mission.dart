@@ -59,6 +59,12 @@ class Mission {
     return flag;
   }
 
+  bool isLeader(User user) {
+    bool flag = false;
+    if (this.leader.uid == user.uid) flag = true;
+    return flag;
+  }
+
   void progress() {
     switch (this.status) {
       case 0:

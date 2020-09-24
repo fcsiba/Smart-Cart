@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/screens/auth/authPage.dart';
 import 'package:trash_troopers/screens/home/home.dart';
+import 'package:trash_troopers/screens/organization/organization_home.dart';
 import 'package:trash_troopers/services/auth_api.dart';
 import 'package:trash_troopers/services/user_api.dart';
 
@@ -21,7 +22,15 @@ class Wrapper extends StatelessWidget {
                   builder: (context, userSnapshot) {
                     // check if connection.active then user.hasData thing..
                     if (userSnapshot.hasData) {
-                      return Home(user: userSnapshot.data as User);
+
+                      // CheckuserType
+                      // print(userSnapshot.data.userType);
+                      if(userSnapshot.data.userType == '1'){
+                        return Home(user: userSnapshot.data as User);
+                      }else if(userSnapshot.data.userType == '2'){
+                        return OrganizationHome(user: userSnapshot.data as User);
+                      }
+
                     } else if (userSnapshot.hasData == null &&
                         userSnapshot.connectionState == ConnectionState.none) {
                       return Center(child: Text('User Data Not Found!'));

@@ -29,6 +29,13 @@ class MissionApi {
         .toList());
   }
 
+  Stream<List<Mission>> fetchMissionsAsStreamByLeader(User user) {
+    return _missionApi.streamDataCollection().map((list) => list.documents
+        .map((doc) => Mission.fromJson(doc.data))
+        .where((m) => m.isLeader(user))
+        .toList());
+  }
+  
   Stream<List<MissionFeed>> fetchMissionFeedsAsStream(Mission myMission) {
     return this
         ._missionApi
