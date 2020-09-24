@@ -18,12 +18,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MissionForm extends StatefulWidget {
   final LatLng location;
-
+  final Mission oldMisson;
+  final bool editMode;
   @override
   _MissionFormState createState() => _MissionFormState();
   MissionForm({
     Key key,
     this.location,
+    this.oldMisson,
+    this.editMode,
   }) : super(key: key);
 }
 
@@ -85,6 +88,12 @@ class _MissionFormState extends State<MissionForm> {
   Widget build(BuildContext context) {
     final userID = Provider.of<User>(context).uid;
 
+    if(this.widget.editMode){
+     nameController.text = this.widget.oldMisson.missionName;
+     addressController.text = this.widget.oldMisson.address;
+     detailsController.text = this.widget.oldMisson.details;
+     trashLevel = this.widget.oldMisson.dangerLevel;
+    }
     return FutureBuilder(
       future: UserApi(uid: userID).getUserData(),
       builder: (context, snapshot) {
@@ -109,7 +118,9 @@ class _MissionFormState extends State<MissionForm> {
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12),
                     title: Text(
-                      'Create Mission',
+                      this.widget.editMode
+                          ? 'Update Mission'
+                          : 'Create Mission',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
@@ -132,12 +143,40 @@ class _MissionFormState extends State<MissionForm> {
                             },
                           ),
                           FlatButton(
-                            child: Text('CREATE'),
+                            child: this.widget.editMode
+                                ? Text('UPDATE')
+                                : Text('CREATE'),
                             color: Theme.of(context).primaryColor,
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 await uploadPic(context);
-                                submitForm();
+                                // update if edit mode
+                                if (this.widget.editMode) {
+                                  // update mission
+                                  Mission updatedMission = Mission(
+                                    missionID: this.widget.oldMisson.missionID,
+                                    missionName: nameController.text.titleCase,
+                                    address: addressController.text.titleCase,
+                                    details:
+                                        detailsController.text.sentenceCase,
+                                    latitude: widget.location.latitude,
+                                    longitude: widget.location.longitude,
+                                    troops: this.widget.oldMisson.troops,
+                                    siteImage: this.widget.oldMisson.siteImage,
+                                    dangerLevel: trashLevel,
+                                    status: this.widget.oldMisson.status,
+                                    expectedCapacity: requiredTroops,
+                                    leader: this.widget.oldMisson.leader,
+                                    createdAt: this.widget.oldMisson.createdAt,
+                                    updatedAt: Timestamp.now(),
+                                  );
+
+                                  MissionApi().updateMissionByName(
+                                      updatedMission,
+                                      this.widget.oldMisson.missionID);
+                                } else {
+                                  submitForm();
+                                }
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
                               }

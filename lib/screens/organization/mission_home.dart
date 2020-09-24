@@ -71,19 +71,19 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                 FlatButton(
                   child: Text('CLOSE'),
                   onPressed: () {
-                   Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                 ),
                 FlatButton(
                   child: Text('NEXT'),
                   onPressed: () {
-                    if(lat != null && lng != null)
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => MissionForm(
-                        location: LatLng(lat, lng),
-                      ),
-                    );
+                    if (lat != null && lng != null)
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => MissionForm(
+                          location: LatLng(lat, lng),
+                        ),
+                      );
                   },
                 )
               ],
@@ -184,7 +184,7 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
   }
 
   Widget missionCard(BuildContext context, Mission mission) {
-    User user = Provider.of<User>(context);
+    // User user = Provider.of<User>(context);
     return Container(
       height: 160,
       margin: EdgeInsets.all(8.0),
@@ -202,17 +202,17 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                   child: Column(
                     children: <Widget>[
                       Icon(
-                        Icons.exit_to_app,
+                        Icons.edit,
                         color: Colors.white,
                       ),
                       SizedBox(height: 3),
-                      Text("Leave", style: TextStyle(color: Colors.white)),
+                      Text("Edit", style: TextStyle(color: Colors.white)),
                     ],
                   )),
               key: Key(mission.missionID),
               onDismissed: (direction) {
                 if (direction == DismissDirection.startToEnd) {
-                  if (user.uid != mission.leader.uid) {
+                  if (this.widget.user.uid != mission.leader.uid) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content:
                           Text("Sorry, only the leader can delete missions"),
@@ -226,9 +226,22 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                     return;
                   }
                   MissionApi().removeMission(mission.docID);
-                } else {
-                  mission.troops.removeWhere((t) => t.email == user.email);
-                  MissionApi().updateMissionByName(mission, mission.missionID);
+                } 
+                
+                else if(direction == DismissDirection.endToStart){
+                  // Edit Screen here..
+                  // mission.troops.removeWhere((t) => t.email == user.email);
+                  // To update mission
+                  // MissionApi().updateMissionByName(mission, mission.missionID);
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => MissionForm(
+                      location: LatLng(mission.latitude, mission.longitude),
+                      oldMisson: mission,
+                      editMode: true,
+                    ),
+                  );
+                  return;
                 }
               },
               background: Container(
