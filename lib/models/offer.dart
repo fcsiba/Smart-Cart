@@ -7,6 +7,7 @@ part 'offer.g.dart';
 @JsonSerializable()
 class Offer {
   final String id;
+  String creatorId;
   String name;
   String detail;
   String vendor;
@@ -19,6 +20,7 @@ class Offer {
 
   Offer({
     @required this.id,
+    @required this.creatorId,
     @required this.name,
     @required this.detail,
     @required this.vendor,

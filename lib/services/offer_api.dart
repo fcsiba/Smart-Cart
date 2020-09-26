@@ -22,6 +22,17 @@ class OfferApi {
     return offers;
   }
 
+  Future<List<Offer>> fetchOffersByUID(String uid) async {
+    var result = await _offerApi.db
+        .collection('offers')
+        .where('creatorId', isEqualTo: uid)
+        .getDocuments();
+        
+    List<Offer> offers =
+        result.documents.map((doc) => Offer.fromJson(doc.data)).toList();
+    return offers;
+  }
+
   Stream<List<Offer>> fetchOffersAsStream() {
     return _offerApi.streamDataCollection().map((list) =>
         list.documents.map((doc) => Offer.fromJson(doc.data)).toList());

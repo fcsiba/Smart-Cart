@@ -15,6 +15,7 @@ class UserApi {
   Future setUserData(
       String email, String password, String name, String profilePhoto, String userType) async {
     return await userData.document(uid).setData({
+      "uid":uid,
       "email": email,
       "password": password,
       "name": name,
