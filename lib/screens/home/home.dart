@@ -20,8 +20,8 @@ class _HomeState extends State<Home> {
   int _currentIndex;
   String _name;
   @override
-  void initState() {
-    super.initState();
+  void get initState {
+    super.initState;
     _currentIndex = 1;
     _title = _titles.elementAt(_currentIndex);
     _name = this.widget.user.name == '' || this.widget.user.name == null

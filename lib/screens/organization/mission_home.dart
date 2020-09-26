@@ -79,13 +79,20 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                 FlatButton(
                   child: Text('NEXT'),
                   onPressed: () {
-                    if (lat != null && lng != null)
+                    if (lat != null && lng != null) {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) => MissionForm(
                           location: LatLng(lat, lng),
+                          oldMission: null,
+                          editMode: false,
                         ),
-                      );
+                      ).then((value) => () {
+                            Navigator.of(context).pop();
+                          });
+                    } else {
+                      Navigator.of(context).pop();
+                    }
                   },
                 )
               ],
@@ -208,8 +215,12 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
               // ));
 
               // GOTO Mission detail page
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MissionDetails(mission: mission,)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MissionDetails(
+                            mission: mission,
+                          )));
             },
             child: Center(
               child: Dismissible(
@@ -233,6 +244,7 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                 key: Key(mission.missionID),
                 onDismissed: (direction) {
                   if (direction == DismissDirection.startToEnd) {
+                    // print(this.widget.user.uid == mission.leader.uid);
                     if (this.widget.user.uid != mission.leader.uid) {
                       Scaffold.of(context).showSnackBar(SnackBar(
                         content:
@@ -244,9 +256,9 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                           },
                         ),
                       ));
-                      return;
+                    } else {
+                      MissionApi().removeMission(mission.docID);
                     }
-                    MissionApi().removeMission(mission.docID);
                   } else if (direction == DismissDirection.endToStart) {
                     // Edit Screen here..
                     // mission.troops.removeWhere((t) => t.email == user.email);
@@ -256,7 +268,7 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                       context: context,
                       builder: (BuildContext context) => MissionForm(
                         location: LatLng(mission.latitude, mission.longitude),
-                        oldMisson: mission,
+                        oldMission: mission,
                         editMode: true,
                       ),
                     );

@@ -55,8 +55,8 @@ class _MissionFinderState extends State<MissionFinder> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void get initState {
+    super.initState;
     // Page conroller - Scroll fixed with viewportFraction: 1,
     _pageController = PageController(
       initialPage: 0,
@@ -351,6 +351,8 @@ class _MissionFinderState extends State<MissionFinder> {
             _cameraMarker.first.position.latitude,
             _cameraMarker.first.position.longitude,
           ),
+          oldMission: null,
+          editMode: false,
         ),
       ).then((x) => {
             // Clear CameraMarker.

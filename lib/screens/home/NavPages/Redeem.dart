@@ -18,13 +18,13 @@ class _RedeemState extends State<Redeem> with TickerProviderStateMixin {
   int _till = 540;// Random().nextInt(1000);
 
   @override
-  void initState() {
+  void get initState {
     _controller = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 5200),
     );
     _animation = _controller;
-    super.initState();
+    super.initState;
   }
 
   @override

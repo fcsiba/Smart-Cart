@@ -47,7 +47,7 @@ class _MissionDetailState extends State<MissionDetailPage> {
   }
 
   @override
-  void initState() {
+  void get initState {
     _controllerCenterRight = ConfettiController(duration: Duration(seconds: 2));
     _controllerCenterLeft = ConfettiController(duration: Duration(seconds: 2));
 
@@ -62,7 +62,7 @@ class _MissionDetailState extends State<MissionDetailPage> {
     // final newColor = Theme.of(context).primaryColor.withOpacity(1);
     // popup.recolor(newColor);
 
-    super.initState();
+    super.initState;
   }
 
   @override

@@ -11,8 +11,8 @@ class _AnimatedIconWidgetState extends State<AnimatedIconWidget>
   AnimationController _controller1;
   bool animate = false;
   @override
-  void initState() {
-    super.initState();
+  void get initState {
+    super.initState;
     _controller1 = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,

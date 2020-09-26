@@ -18,14 +18,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MissionForm extends StatefulWidget {
   final LatLng location;
-  final Mission oldMisson;
+  final Mission oldMission;
   final bool editMode;
+  
   @override
   _MissionFormState createState() => _MissionFormState();
+  
   MissionForm({
     Key key,
     this.location,
-    this.oldMisson,
+    this.oldMission,
     this.editMode,
   }) : super(key: key);
 }
@@ -84,16 +86,21 @@ class _MissionFormState extends State<MissionForm> {
     }
   }
 
+  bool onInit = true;
+
   @override
   Widget build(BuildContext context) {
     final userID = Provider.of<User>(context).uid;
 
-    if(this.widget.editMode){
-     nameController.text = this.widget.oldMisson.missionName;
-     addressController.text = this.widget.oldMisson.address;
-     detailsController.text = this.widget.oldMisson.details;
-     trashLevel = this.widget.oldMisson.dangerLevel;
+    if (this.widget.editMode && onInit) {
+      nameController.text = this.widget.oldMission.missionName;
+      addressController.text = this.widget.oldMission.address;
+      detailsController.text = this.widget.oldMission.details;
+      trashLevel = this.widget.oldMission.dangerLevel;
+      requiredTroops = this.widget.oldMission.expectedCapacity;
+      onInit = false;
     }
+    
     return FutureBuilder(
       future: UserApi(uid: userID).getUserData(),
       builder: (context, snapshot) {
@@ -154,26 +161,26 @@ class _MissionFormState extends State<MissionForm> {
                                 if (this.widget.editMode) {
                                   // update mission
                                   Mission updatedMission = Mission(
-                                    missionID: this.widget.oldMisson.missionID,
+                                    missionID: this.widget.oldMission.missionID,
                                     missionName: nameController.text.titleCase,
                                     address: addressController.text.titleCase,
                                     details:
                                         detailsController.text.sentenceCase,
                                     latitude: widget.location.latitude,
                                     longitude: widget.location.longitude,
-                                    troops: this.widget.oldMisson.troops,
-                                    siteImage: this.widget.oldMisson.siteImage,
+                                    troops: this.widget.oldMission.troops,
+                                    siteImage: this.widget.oldMission.siteImage,
                                     dangerLevel: trashLevel,
-                                    status: this.widget.oldMisson.status,
+                                    status: this.widget.oldMission.status,
                                     expectedCapacity: requiredTroops,
-                                    leader: this.widget.oldMisson.leader,
-                                    createdAt: this.widget.oldMisson.createdAt,
+                                    leader: this.widget.oldMission.leader,
+                                    createdAt: this.widget.oldMission.createdAt,
                                     updatedAt: Timestamp.now(),
                                   );
 
                                   MissionApi().updateMissionByName(
                                       updatedMission,
-                                      this.widget.oldMisson.missionID);
+                                      this.widget.oldMission.missionID);
                                 } else {
                                   submitForm();
                                 }

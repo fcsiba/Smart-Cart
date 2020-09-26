@@ -25,11 +25,11 @@ class _FeedBoxState extends State<FeedBox> {
   ScrollController _scrollController;
 
   @override
-  void initState() {
+  void get initState {
     _mission = widget.mission;
     _user = widget.user;
     _scrollController = new ScrollController();
-    super.initState();
+    super.initState;
   }
 
   void submit() {
