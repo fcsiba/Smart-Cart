@@ -10,6 +10,7 @@ import 'package:trash_troopers/models/mission.dart';
 import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/screens/mission/missionform.dart';
 import 'package:trash_troopers/services/mission_api.dart';
+import 'package:trash_troopers/services/user_api.dart';
 import 'package:trash_troopers/widgets/MissionCard.dart';
 import 'dart:ui' as ui;
 
@@ -169,10 +170,12 @@ class _MissionFinderState extends State<MissionFinder> {
                   initialCameraPosition: CameraPosition(
                     // target: _myMapPosition,
                     target: LatLng(
+                        // issue in first
                       // issue in first 
+                        // issue in first
                         // 1.234567,1.345678
-                        missions.first.latitude, missions.first.longitude
-                        ),
+                        missions.first.latitude,
+                        missions.first.longitude),
                     zoom: 16,
                   ),
                   markers: Set.from(allMarkers)..addAll(_cameraMarker),
@@ -227,10 +230,13 @@ class _MissionFinderState extends State<MissionFinder> {
                               },
                               onPressed: isAlreadyIn
                                   ? null
-                                  : () {
+                                  : () async {
                                       if (isAlreadyIn) return null;
                                       if (mission.troops == null)
                                         mission.troops = [];
+                                      instance =
+                                          await UserApi(uid: instance.uid)
+                                              .getUserData();
                                       mission.troops.add(instance);
                                       MissionApi().updateMissionByName(
                                           mission, mission.missionID);
