@@ -23,28 +23,34 @@ class _OrganizationHomeState extends State<OrganizationHome> {
       body: Container(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
                 height: 10,
               ),
               CustomButton(
                   label: 'MISSIONS',
+                  icon: Icons.map,
                   onPressed: () {
                     // Create a Mission Home
                     Navigator.push(
                       context,
                       // push user here
-                      MaterialPageRoute(builder: (context) => MyOrgMissions(user: this.widget.user)),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MyOrgMissions(user: this.widget.user)),
                     );
                   }),
               SizedBox(
                 height: 10,
               ),
-              CustomButton(label: 'USERS', onPressed: () {}),
+              CustomButton(
+                  label: 'REWARDS', icon: Icons.redeem, onPressed: () {}),
               SizedBox(
                 height: 10,
               ),
-              CustomButton(label: 'REWARDS', onPressed: () {}),
+              CustomButton(
+                  label: 'USERS', icon: Icons.people, onPressed: () {}),
             ],
           ),
         ),
@@ -54,16 +60,18 @@ class _OrganizationHomeState extends State<OrganizationHome> {
 }
 
 class CustomButton extends StatelessWidget {
-  CustomButton({@required this.onPressed, this.label});
+  CustomButton({@required this.onPressed, this.label, this.icon});
   final GestureTapCallback onPressed;
   final String label;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Container(
-        height: 100,
+        height: 150,
+        width: 150,
         child: RaisedButton(
           onPressed: onPressed,
           shape:
@@ -79,10 +87,23 @@ class CustomButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0)),
             child: Container(
               alignment: Alignment.center,
-              child: Text(
-                label,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 18),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    size: 44,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    label,
+                    // textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ],
               ),
             ),
           ),
