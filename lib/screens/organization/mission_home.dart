@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:trash_troopers/models/mission.dart';
 import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/screens/mission/missionform.dart';

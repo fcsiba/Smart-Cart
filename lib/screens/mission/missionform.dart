@@ -555,7 +555,7 @@ class _MissionFormState extends State<MissionForm> {
     }
     String fileName = basename(_image.path);
     StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('missions/${fileName}');
+        FirebaseStorage.instance.ref().child('missions/$fileName');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     _uploadedFileUrl = await taskSnapshot.ref.getDownloadURL();

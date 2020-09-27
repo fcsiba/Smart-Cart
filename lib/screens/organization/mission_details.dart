@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:trash_troopers/models/mission.dart';
 import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/services/mission_api.dart';
@@ -58,7 +57,7 @@ class _MissionDetailsState extends State<MissionDetails> {
                   // Name
                   title: Text(
                     '${troops[index].name}',
-                    style: Theme.of(context).textTheme.body2,
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
 
                   // email

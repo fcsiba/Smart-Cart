@@ -4,7 +4,6 @@ import 'package:trash_troopers/screens/home/NavPages/OfferStore.dart';
 
 import 'NavPages/MissionFinder.dart';
 import 'NavPages/MyMissions.dart';
-import 'NavPages/Redeem.dart';
 import 'NavPages/Profile.dart';
 
 class Home extends StatefulWidget {

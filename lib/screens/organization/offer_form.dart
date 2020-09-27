@@ -571,7 +571,7 @@ class _OfferFormState extends State<OfferForm> {
     }
     String fileName = basename(_image.path);
     StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('offers/${fileName}');
+        FirebaseStorage.instance.ref().child('offers/$fileName');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     _uploadedFileUrl = await taskSnapshot.ref.getDownloadURL();

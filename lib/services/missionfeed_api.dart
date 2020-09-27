@@ -32,7 +32,7 @@ class MissionFeedApi {
   }
 
   Future addMissionFeed(MissionFeed data) async {
-    var result = await _missionFeedApi.addDocument(data.toJson());
+    await _missionFeedApi.addDocument(data.toJson());
     return;
   }
 }

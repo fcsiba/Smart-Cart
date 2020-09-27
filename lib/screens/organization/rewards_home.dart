@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:intl/intl.dart';
 import 'package:trash_troopers/models/offer.dart';
 import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/services/offer_api.dart';
@@ -93,133 +94,143 @@ class OfferEditCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
           elevation: 0.8,
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Image
-                    Container(
-                      width: 250,
-                      height: 100,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12.0),
-                        ),
-                        child: Center(
-                          child: CachedNetworkImage(
-                            width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.cover,
-                            imageUrl: offer.image,
-                            placeholder: (context, url) =>
-                                new CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                new Icon(Icons.error),
-                          ),
-                        ),
-                      ),
+              //  Image
+              Container(
+                height: 100,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0)),
+                  child: Center(
+                    child: CachedNetworkImage(
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                      imageUrl: offer.image,
+                      placeholder: (context, url) =>
+                          new CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          new Icon(Icons.error),
                     ),
-
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              '${offer.name}',
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.start,
-                              maxLines: 2,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                              ),
-                            ),
-
-                            Text(
-                              'by ${offer.vendor}',
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.start,
-                              maxLines: 1,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: Colors.black87,
-                              ),
-                            ),
-
-                            Text(
-                              '${offer.points}  Points',
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.start,
-                              maxLines: 1,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                fontFamily: 'QuickSand',
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            // String detail;
-                            // String vendor;
-                            // String offerCode;
-                            // String createdAt;
-                            // String updatedAt;
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
 
-              // Edit/Delete buttons
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      // Edit offer here
-                      showDialog(
-                      context: context,
-                      builder: (BuildContext context) => OfferForm(
-                        oldOffer: offer,
-                        editMode: true,
-                      ),
-                    );
+              // Body
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Info
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '${offer.name}',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
 
-                    },
-                    icon: new Icon(
-                      Icons.edit,
-                      color: Colors.black54,
-                      size: 36,
+                        Text(
+                          'by ${offer.vendor}',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.black87,
+                          ),
+                        ),
+
+                        Text(
+                          '${offer.points}  Points',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            fontFamily: 'QuickSand',
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+
+                        Text(
+                          new DateFormat.yMMMd()
+                              .format(offer.updatedAt.toDate())
+                              .toString(),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            fontFamily: 'QuickSand',
+                            color: Colors.black87,
+                          ),
+                        ),
+                        // String detail;
+                        // String vendor;
+                        // String offerCode;
+                        // String createdAt;
+                        // String updatedAt;
+                      ],
                     ),
-                    tooltip: "Edit Offer",
-                  ),
-                  SizedBox(width: 20),
-                  IconButton(
-                    onPressed: () async {
-                      // Delete offer here
-                      print(offer.id);
-                      await OfferApi().removeOffer(offer.docID);
-                    },
-                    icon: new Icon(
-                      Icons.delete,
-                      color: Colors.red[300],
-                      size: 36,
+
+                    // Edit/Delete buttons
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            // Edit offer here
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => OfferForm(
+                                oldOffer: offer,
+                                editMode: true,
+                              ),
+                            );
+                          },
+                          icon: new Icon(
+                            Icons.edit,
+                            color: Colors.black54,
+                            size: 36,
+                          ),
+                          tooltip: "Edit Offer",
+                        ),
+                        SizedBox(width: 20),
+                        IconButton(
+                          onPressed: () async {
+                            // Delete offer here
+                            print(offer.id);
+                            await OfferApi().removeOffer(offer.docID);
+                          },
+                          icon: new Icon(
+                            Icons.delete,
+                            color: Colors.red[300],
+                            size: 36,
+                          ),
+                          tooltip: "Delete Offer",
+                        ),
+                      ],
                     ),
-                    tooltip: "Delete Offer",
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

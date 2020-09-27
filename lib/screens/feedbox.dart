@@ -69,7 +69,7 @@ class _FeedBoxState extends State<FeedBox> {
                               // Message
                               title: Text(
                                 '${snapshot.data[index].description}.',
-                                style: Theme.of(context).textTheme.body2,
+                                style: Theme.of(context).textTheme.bodyText2,
                               ),
 
                               // Sender
