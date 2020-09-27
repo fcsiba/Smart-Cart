@@ -227,12 +227,15 @@ class OfferEditCard extends StatelessWidget {
                                   actions: [
                                     FlatButton(
                                       child: Text("Cancel"),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
                                     ),
                                     FlatButton(
                                       child: Text("DELETE"),
                                       onPressed: () {
                                         OfferApi().removeOffer(offer.docID);
+                                        Navigator.of(context).pop();
                                       },
                                     ),
                                   ],

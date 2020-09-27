@@ -79,6 +79,8 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                   child: Text('NEXT'),
                   onPressed: () {
                     if (lat != null && lng != null) {
+                      Navigator.of(context).pop();
+
                       showDialog(
                         context: context,
                         builder: (BuildContext context) => MissionForm(
@@ -147,13 +149,16 @@ class _MyOrgMissionsState extends State<MyOrgMissions> {
                               actions: [
                                 FlatButton(
                                   child: Text("Cancel"),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
                                 ),
                                 FlatButton(
                                   child: Text("DELETE"),
                                   onPressed: () {
                                     MissionApi()
                                         .removeMission(missions[index].docID);
+                                    Navigator.of(context).pop();
                                   },
                                 ),
                               ],
