@@ -180,7 +180,7 @@ class _MissionFinderState extends State<MissionFinder> {
                     zoom: 16,
                   ),
                   markers: Set.from(allMarkers)..addAll(_cameraMarker),
-                  onTap: _handleTap,
+                  // onTap: _handleTap,
                   onCameraMove: _onCameraMove,
                 ),
               ),

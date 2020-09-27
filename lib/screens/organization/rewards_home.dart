@@ -215,10 +215,30 @@ class OfferEditCard extends StatelessWidget {
                         ),
                         SizedBox(width: 20),
                         IconButton(
-                          onPressed: () async {
+                          onPressed: () {
                             // Delete offer here
-                            print(offer.id);
-                            await OfferApi().removeOffer(offer.docID);
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Confirm Delete"),
+                                  content: Text(
+                                      "Are you sure to delete ${offer.name}?"),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text("Cancel"),
+                                      onPressed: () {},
+                                    ),
+                                    FlatButton(
+                                      child: Text("DELETE"),
+                                      onPressed: () {
+                                        OfferApi().removeOffer(offer.docID);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                           icon: new Icon(
                             Icons.delete,

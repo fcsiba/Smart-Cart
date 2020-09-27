@@ -75,7 +75,7 @@ class MissionCard extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            mission.missionName,
+                            "${mission.missionName} by ${mission.leader.name}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 18,
