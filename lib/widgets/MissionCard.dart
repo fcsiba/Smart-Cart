@@ -190,11 +190,13 @@ class MissionCard extends StatelessWidget {
                                 color: Theme.of(context).primaryColor,
                                 onPressed: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              MissionDetailPage(
-                                                  currentMission: mission)));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MissionDetailPage(
+                                        currentMission: mission,
+                                      ),
+                                    ),
+                                  );
                                 },
                               )
                             : SizedBox(),

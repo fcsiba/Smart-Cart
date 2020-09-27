@@ -8,7 +8,10 @@ import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/services/mission_api.dart';
 
 class RatingTile extends StatefulWidget {
-  RatingTile({Key key, this.mission, this.user}) : super(key: key);
+  RatingTile({Key key, this.mission, this.user, this.callback})
+      : super(key: key);
+
+  Function(User, double) callback;
   final double rating = 0.0;
   final Mission mission;
   final User user;
@@ -17,9 +20,6 @@ class RatingTile extends StatefulWidget {
 }
 
 class _RatingTileState extends State<RatingTile> {
-
-
-
   @override
   Widget build(BuildContext context) {
     User currUser = Provider.of<User>(context);
@@ -78,7 +78,7 @@ class _RatingTileState extends State<RatingTile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RatingBar(
-                initialRating: 3,
+                initialRating: 1,
                 minRating: 1,
                 maxRating: 5,
                 direction: Axis.horizontal,
@@ -90,7 +90,11 @@ class _RatingTileState extends State<RatingTile> {
                   color: Colors.amber,
                 ),
                 onRatingUpdate: (rating) {
-                  MissionApi().addMissionRating(widget.mission, currUser.uid, widget.user.uid, rating);
+                  // Send the user and rating as map back to parent
+                  widget.callback(this.widget.user,rating);
+
+                  MissionApi().addMissionRating(
+                      widget.mission, currUser.uid, widget.user.uid, rating);
                 },
               )
             ],

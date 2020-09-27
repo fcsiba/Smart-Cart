@@ -1,20 +1,38 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trash_troopers/models/contribution.dart';
 import 'package:trash_troopers/models/mission.dart';
 import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/screens/ratings/ratingtile.dart';
+import 'package:trash_troopers/services/mission_api.dart';
 import 'package:trash_troopers/services/user_api.dart';
 
 class Rating extends StatefulWidget {
-  Rating({Key key, this.mission}) : super(key: key);
+  Rating({Key key, this.mission, this.user, this.userTime}) : super(key: key);
 
   final Mission mission;
-
+  final User user;
+  final int userTime;
   @override
   _RatingState createState() => _RatingState();
 }
 
 class _RatingState extends State<Rating> {
+  Map<User, double> myRatings = HashMap<User, double>();
+
+  callback(User user, double rating) {
+    print({user.toJson(): rating});
+    setState(() {
+      this.myRatings.addAll({user: rating});
+    });
+  }
+
+  // Future<User> getUser() async {
+  //   return await UserApi(uid: this.widget.userUID).getUserData();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,7 +80,8 @@ class _RatingState extends State<Rating> {
                           } else if (userSnapshot.hasData) {
                             return RatingTile(
                                 mission: widget.mission,
-                                user: userSnapshot.data as User);
+                                user: userSnapshot.data as User,
+                                callback: callback);
                           } else {
                             return Center(
                               child: CircularProgressIndicator(
@@ -80,14 +99,41 @@ class _RatingState extends State<Rating> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40.0)),
               color: Colors.amber,
-              // TODO(Sualeh): Check this, should it do something?
-              onPressed: () => {Navigator.of(context).pop()},
+              onPressed: () {
+                User user = this.widget.user;
+                Mission tempMission = this.widget.mission;
+
+                if (tempMission.contributions == null)
+                  tempMission.contributions = new HashMap<User, Contribution>();
+
+                Contribution contribution = Contribution(
+                  startTime: DateTime.now(),
+                  endTime: DateTime.now(),
+                  hasCompleted: true,
+                );
+
+                contribution.points = 100;
+                // contribution.ratings = this.myRatings;
+
+                // contribution.ratings.forEach((key, value) {
+                //   print(key.toJson());
+                //   print(value);
+                // });
+
+                tempMission.contributions
+                    .putIfAbsent(user.uid, () => contribution.toJson());
+
+                MissionApi().updateMissionByName(
+                    tempMission, this.widget.mission.missionID);
+
+                Navigator.of(context).pop();
+              },
               icon: Icon(
                 Icons.done,
                 color: Colors.white,
               ),
               label: Text(
-                "I\'m Done",
+                "CLAIM REWARD",
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white,
