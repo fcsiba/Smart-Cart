@@ -136,6 +136,7 @@ Widget addDummyOffers() {
           type: 'food',
           image:
               "https://firebasestorage.googleapis.com/v0/b/trash-troopers.appspot.com/o/offers%2Ffood.jpg?alt=media&token=67700304-8881-46cc-8faa-4f4f9b14dd33",
+          creatorId: null,
         );
 
         Offer offerT = Offer(
@@ -150,6 +151,7 @@ Widget addDummyOffers() {
           type: 'top-up',
           image:
               "https://firebasestorage.googleapis.com/v0/b/trash-troopers.appspot.com/o/offers%2Ftopup.jpg?alt=media&token=d29bb764-75c5-4e1f-a8cf-36a3e3f61ee5",
+          creatorId: null,
         );
 
         OfferApi().addOffer(offerT);

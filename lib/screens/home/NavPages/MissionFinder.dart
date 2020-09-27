@@ -74,10 +74,11 @@ class _MissionFinderState extends State<MissionFinder> {
   _getGeoLocator() async {
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-    setState(() {
-      _myMapPosition =
-          LatLng(currentLocation.latitude, currentLocation.longitude);
-    });
+    if (mounted)
+      setState(() {
+        _myMapPosition =
+            LatLng(currentLocation.latitude, currentLocation.longitude);
+      });
   }
 
   void _onScroll() {
@@ -171,7 +172,7 @@ class _MissionFinderState extends State<MissionFinder> {
                     // target: _myMapPosition,
                     target: LatLng(
                         // issue in first
-                      // issue in first 
+                        // issue in first
                         // issue in first
                         // 1.234567,1.345678
                         missions.first.latitude,

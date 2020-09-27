@@ -4,6 +4,7 @@ import 'package:trash_troopers/models/offer.dart';
 import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/services/offer_api.dart';
 
+import 'offer_form.dart';
 
 class MyOrgRewards extends StatefulWidget {
   final User user;
@@ -25,6 +26,16 @@ class _MyOrgRewardsState extends State<MyOrgRewards> {
         onPressed: () {
           // Add offer code here!
           // Alert with offer input.
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => OfferForm(
+              oldOffer: null,
+              editMode: false,
+            ),
+          ).then((value) => () {
+                Navigator.of(context).pop();
+                setState(() {});
+              });
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.green,
@@ -34,8 +45,8 @@ class _MyOrgRewardsState extends State<MyOrgRewards> {
           "${this.widget.user.name} Rewards",
         ),
       ),
-      body: FutureBuilder(
-          future: OfferApi().fetchOffersByUID(this.widget.user.uid),
+      body: StreamBuilder(
+          stream: OfferApi().fetchOffersByUidAsStream(this.widget.user.uid),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
               return Center(child: Text('No Organization Rewards.'));
@@ -178,6 +189,14 @@ class OfferEditCard extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       // Edit offer here
+                      showDialog(
+                      context: context,
+                      builder: (BuildContext context) => OfferForm(
+                        oldOffer: offer,
+                        editMode: true,
+                      ),
+                    );
+
                     },
                     icon: new Icon(
                       Icons.edit,
@@ -188,8 +207,10 @@ class OfferEditCard extends StatelessWidget {
                   ),
                   SizedBox(width: 20),
                   IconButton(
-                    onPressed: () {
+                    onPressed: () async {
                       // Delete offer here
+                      print(offer.id);
+                      await OfferApi().removeOffer(offer.docID);
                     },
                     icon: new Icon(
                       Icons.delete,

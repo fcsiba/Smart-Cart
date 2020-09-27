@@ -16,7 +16,7 @@ class OfferApi {
         .collection('offers')
         .where('type', isEqualTo: type)
         .getDocuments();
-        
+
     List<Offer> offers =
         result.documents.map((doc) => Offer.fromJson(doc.data)).toList();
     return offers;
@@ -27,10 +27,17 @@ class OfferApi {
         .collection('offers')
         .where('creatorId', isEqualTo: uid)
         .getDocuments();
-        
+
     List<Offer> offers =
         result.documents.map((doc) => Offer.fromJson(doc.data)).toList();
     return offers;
+  }
+
+  Stream<List<Offer>> fetchOffersByUidAsStream(String uid) {
+    return _offerApi.streamDataCollection().map((list) => list.documents
+        .map((doc) => Offer.fromJson(doc.data))
+        .where((m) => m.isCreator(uid))
+        .toList());
   }
 
   Stream<List<Offer>> fetchOffersAsStream() {
@@ -45,6 +52,7 @@ class OfferApi {
 
   Future removeOffer(String id) async {
     await _offerApi.removeDocument(id);
+    // .document(id).delete()
     return;
   }
 
@@ -53,7 +61,7 @@ class OfferApi {
     return;
   }
 
-  Future updateOfferByName(Offer data, String name) async {
+  Future updateOfferByID(Offer data, String id) async {
     _offerApi.db
         .collection('offers')
         .where('id', isEqualTo: data.id)
@@ -66,8 +74,9 @@ class OfferApi {
   }
 
   Future addOffer(Offer data) async {
-    await _offerApi.addDocument(data.toJson());
+    var result = await _offerApi.addDocument(data.toJson());
+    data.docID = result.documentID;
+    this.updateOfferByID(data, data.id);
     return;
   }
-  
 }
