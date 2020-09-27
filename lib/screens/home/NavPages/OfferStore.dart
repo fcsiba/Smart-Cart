@@ -93,10 +93,9 @@ class _OfferStoreState extends State<OfferStore> with TickerProviderStateMixin {
                 child: Column(
                   children: <Widget>[
                     // addDummyOffers(),
-                    offerListBuilder('food'),
-                    offerListBuilder('top-up'),
-                    offerListBuilder('top-up'),
-                    offerListBuilder('top-up'),
+                    offerListBuilder('Food'),
+                    offerListBuilder('Food'),
+                    offerListBuilder('Food'),
                     ActionChip(
                       onPressed: () {},
                       avatar: Icon(

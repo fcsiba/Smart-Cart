@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trash_troopers/models/user.dart';
+import 'package:trash_troopers/screens/organization/organization_profile.dart';
 import 'package:trash_troopers/screens/organization/rewards_home.dart';
 
 import 'mission_home.dart';
@@ -45,8 +46,10 @@ class _OrganizationHomeState extends State<OrganizationHome> {
                 height: 10,
               ),
               CustomButton(
-                  label: 'REWARDS', icon: Icons.redeem, onPressed: () {
-                     Navigator.push(
+                  label: 'REWARDS',
+                  icon: Icons.redeem,
+                  onPressed: () {
+                    Navigator.push(
                       context,
                       // push user here
                       MaterialPageRoute(
@@ -58,7 +61,15 @@ class _OrganizationHomeState extends State<OrganizationHome> {
                 height: 10,
               ),
               CustomButton(
-                  label: 'USERS', icon: Icons.people, onPressed: () {}),
+                  label: 'PROFILE',
+                  icon: Icons.person,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      // push user here
+                      MaterialPageRoute(builder: (context) => MyOrgProfile()),
+                    );
+                  }),
             ],
           ),
         ),
