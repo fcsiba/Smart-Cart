@@ -24,11 +24,11 @@ class OfferCard extends StatelessWidget {
           ));
         },
         child: Card(
-          color: Colors.transparent,
+          color: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(8.0),
           ),
-          elevation: 0.0,
+          elevation: 0.8,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -37,8 +37,9 @@ class OfferCard extends StatelessWidget {
                 width: 150,
                 height: 100,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12.0),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
                   ),
                   child: Center(
                     child: CachedNetworkImage(

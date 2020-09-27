@@ -9,11 +9,14 @@ class MissionCard extends StatelessWidget {
     this.mission,
     this.onTapped,
     this.onPressed,
+    this.member,
   }) : super(key: key);
 
   final Mission mission;
   final Function onTapped;
   final Function onPressed;
+  final bool member;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -172,29 +175,39 @@ class MissionCard extends StatelessWidget {
 
                     // Button Bar
                     ButtonBar(
-                      alignment: MainAxisAlignment.spaceEvenly,
+                      alignment: MainAxisAlignment.end,
                       buttonHeight: 30,
                       children: <Widget>[
-                        OutlineButton(
-                          child: Text(
-                            'VIEW',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MissionDetailPage(
-                                        currentMission: mission)));
-                          },
-                        ),
-                        FlatButton(
-                            child: Text('JOIN'),
-                            color: Theme.of(context).primaryColor,
-                            onPressed: onPressed),
+                        // Disable unless joined
+                        this.member
+                            ? OutlineButton(
+                                child: Text(
+                                  'VIEW',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                color: Theme.of(context).primaryColor,
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MissionDetailPage(
+                                                  currentMission: mission)));
+                                },
+                              )
+                            : SizedBox(),
+
+                        this.member
+                            ? FlatButton(
+                                child: Text('LEAVE'),
+                                color: Theme.of(context).primaryColor,
+                                onPressed: onPressed)
+                            : FlatButton(
+                                child: Text('JOIN'),
+                                color: Theme.of(context).primaryColor,
+                                onPressed: onPressed),
                       ],
                     ),
                   ],

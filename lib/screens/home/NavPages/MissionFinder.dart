@@ -229,8 +229,20 @@ class _MissionFinderState extends State<MissionFinder> {
                               onTapped: () {
                                 _moveCamera();
                               },
+                              member: isAlreadyIn,
                               onPressed: isAlreadyIn
-                                  ? null
+                                  ? () async {
+                                      if (mission.troops == null)
+                                        mission.troops = [];
+                                      instance =
+                                          await UserApi(uid: instance.uid)
+                                              .getUserData();
+                                      mission.troops.removeWhere(
+                                          (t) => t.email == instance.email);
+                                      MissionApi().updateMissionByName(
+                                          mission, mission.missionID);
+                                      setState(() {});
+                                    }
                                   : () async {
                                       if (isAlreadyIn) return null;
                                       if (mission.troops == null)
@@ -268,15 +280,16 @@ class _MissionFinderState extends State<MissionFinder> {
                   alignment: Alignment.topRight,
                   child: Column(
                     children: <Widget>[
-                      FloatingActionButton(
-                        heroTag: null,
-                        tooltip: 'Create Mission',
-                        mini: true,
-                        onPressed: _onAddMarkerButtonPressed,
-                        materialTapTargetSize: MaterialTapTargetSize.padded,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        child: Icon(Icons.add),
-                      ),
+                      // Create Mission
+                      // FloatingActionButton(
+                      //   heroTag: null,
+                      //   tooltip: 'Create Mission',
+                      //   mini: true,
+                      //   onPressed: _onAddMarkerButtonPressed,
+                      //   materialTapTargetSize: MaterialTapTargetSize.padded,
+                      //   backgroundColor: Theme.of(context).primaryColor,
+                      //   child: Icon(Icons.add),
+                      // ),
                       FloatingActionButton(
                         heroTag: null,
                         mini: true,

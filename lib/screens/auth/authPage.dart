@@ -508,7 +508,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ]),
             )),
-        googleAnimator,
+        // googleAnimator,
         AuthButton(
             width: width,
             label: 'REGISTER',
