@@ -61,7 +61,8 @@ class Mission {
 
   bool isLeader(User user) {
     bool flag = false;
-    if (this.leader.uid == user.uid) flag = true;
+    // Null Aware operator
+    if (this.leader?.uid == user?.uid) flag = true;
     return flag;
   }
 

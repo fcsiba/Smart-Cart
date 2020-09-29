@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import 'package:flutter_beautiful_popup/main.dart';
 import 'package:flutter_timer/flutter_timer.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +27,6 @@ class MissionDetailPage extends StatefulWidget {
 class _MissionDetailState extends State<MissionDetailPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final descController = TextEditingController();
-  int _currentStep = 0;
   bool fileUploading = false;
   List<MissionFeed> missionFeedList;
   MissionFeedApi missionFeedApi = MissionFeedApi();
@@ -36,7 +34,6 @@ class _MissionDetailState extends State<MissionDetailPage> {
   Mission myMission;
   User myUser = User();
   User user;
-  BeautifulPopup popup;
 
   bool running = false;
   bool processed = false;
@@ -53,26 +50,12 @@ class _MissionDetailState extends State<MissionDetailPage> {
       myMission = widget.currentMission;
     }
 
-    popup = BeautifulPopup(
-      context: context,
-      template: TemplateGift,
-    );
-    // final newColor = Theme.of(context).primaryColor.withOpacity(1);
-    // popup.recolor(newColor);
-
     super.initState;
   }
 
   @override
   Widget build(BuildContext context) {
     myUser = Provider.of<User>(context);
-    _currentStep = myMission.status;
-
-    // var missionList = Provider.of<List<Mission>>(context);
-    // print(missionList?.length);
-    // missionFeedList?.forEach((f) => {
-    //     print(f.description)
-    // });
 
     return Scaffold(
       key: _scaffoldKey,
@@ -249,7 +232,6 @@ class _MissionDetailState extends State<MissionDetailPage> {
 
                             // Send a message on the feed
                             notifyFeed(user);
-
                           } catch (e) {
                             print('error here');
                           }
@@ -275,41 +257,6 @@ class _MissionDetailState extends State<MissionDetailPage> {
         : 'END MY MISSION. Total Minutes: $myMinutes';
     myFeed.description = log;
     MissionApi().addMissionFeed(myMission, myFeed);
-  }
-
-  void _settingModalBottomSheet(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return Rating();
-        });
-  }
-
-  void showCompletedPopup(BuildContext context) {
-    popup.show(
-      title: 'Congratulations!',
-      content: Column(children: <Widget>[
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-                "Salute to you fellow Trash Trooper! We have awarded you for your efforts. Keep on contributing so we can ")),
-        SizedBox(
-          height: 20,
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text("#MakePakistanGreenAgain",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22))),
-      ]),
-      actions: [
-        popup.button(
-          label: 'Close',
-          onPressed: Navigator.of(context).pop,
-        ),
-      ],
-      // bool barrierDismissible = false,
-      // Widget close,
-    );
   }
 }
 

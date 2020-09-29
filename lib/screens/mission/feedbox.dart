@@ -8,8 +8,8 @@ import 'package:trash_troopers/models/user.dart';
 import 'package:trash_troopers/services/mission_api.dart';
 
 class FeedBox extends StatefulWidget {
-  FeedBox({Key key, this.mission, this.user}) : super(key: key);
-
+  FeedBox({Key key, this.mission, this.user, this.maxHeight}) : super(key: key);
+  final bool maxHeight;
   final Mission mission;
   final User user;
 
@@ -48,7 +48,9 @@ class _FeedBoxState extends State<FeedBox> {
     return Container(
         color: Colors.green,
         padding: EdgeInsets.all(5),
-        height: MediaQuery.of(context).size.height / 3.1,
+        height: this.widget.maxHeight
+            ? MediaQuery.of(context).size.height
+            : MediaQuery.of(context).size.height / 3.1,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -83,15 +85,16 @@ class _FeedBoxState extends State<FeedBox> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data.length > 0) {
                       return Container(
-                        height:
-                            (MediaQuery.of(context).size.height / 3.1) / 1.35,
+                        height: this.widget.maxHeight
+                            ? MediaQuery.of(context).size.height / 1.5
+                            : (MediaQuery.of(context).size.height / 3.1) / 1.35,
                         // color: Colors.indigo,
 
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           controller: _scrollController,
-                          reverse: true,
+                          reverse: this.widget.maxHeight ? false : true,
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, int index) {
                             MissionFeed currentFeed = snapshot.data[index];
@@ -116,16 +119,14 @@ class _FeedBoxState extends State<FeedBox> {
                                           fit: BoxFit.fill,
                                           placeholder: (context, url) =>
                                               new CircularProgressIndicator(),
-                                          errorWidget:
-                                              (context, url, error) =>
-                                                  new Icon(Icons.error),
+                                          errorWidget: (context, url, error) =>
+                                              new Icon(Icons.error),
                                         ),
                                 )),
                                 // Message
                                 title: Text(
                                   '${currentFeed.description}',
-                                  style:
-                                      Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
 
                                 // Sender
