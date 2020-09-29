@@ -117,7 +117,10 @@ class _MissionDetailState extends State<MissionDetailPage> {
                 } else if (userSnapshot.hasData) {
                   this.user = userSnapshot.data as User;
                   return FeedBox(
-                      mission: myMission, user: userSnapshot.data as User);
+                    mission: myMission,
+                    user: userSnapshot.data as User,
+                    maxHeight: false,
+                  );
                 } else {
                   return Center(
                     child: CircularProgressIndicator(

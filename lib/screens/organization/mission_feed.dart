@@ -21,7 +21,9 @@ class _OrgMissionFeedState extends State<OrgMissionFeed> {
         ), // Create Mission
       ),
       body: FeedBox(
-          mission: this.widget.mission, user: this.widget.mission.leader, maxHeight: true),
+          mission: this.widget.mission,
+          user: this.widget.mission.leader,
+          maxHeight: true),
     );
   }
 }

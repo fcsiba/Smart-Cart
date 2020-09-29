@@ -31,30 +31,10 @@ class Mission {
   final Timestamp createdAt;
   Timestamp updatedAt;
 
-  // int missionStatusNumber() {
-  //     switch (this.status) {
-  //     case MissionStatus.Initiated: {
-  //        return 0;
-  //     }
-  //     break;
-  //     case MissionStatus.InProgresss: {
-  //        return 1;
-  //     }
-  //     break;
-  //     case MissionStatus.Successful: {
-  //        return 2;
-  //     }
-  //     break;
-  //     default: {
-  //       return -1;
-  //     }
-  // }
-  // }
-
   bool hasUser(User user) {
     bool flag = false;
-    this.troops.forEach((troop) {
-      if (troop.uid == user.uid) flag = true;
+    this.troops?.forEach((troop) {
+      if (troop?.uid == user?.uid) flag = true;
     });
     return flag;
   }
@@ -64,40 +44,6 @@ class Mission {
     // Null Aware operator
     if (this.leader?.uid == user?.uid) flag = true;
     return flag;
-  }
-
-  void progress() {
-    switch (this.status) {
-      case 0:
-        {
-          this.status = 1;
-        }
-        break;
-      case 1:
-        {
-          this.status = 2;
-        }
-        break;
-      default:
-        {}
-    }
-  }
-
-  void regress() {
-    switch (this.status) {
-      case 2:
-        {
-          this.status = 1;
-        }
-        break;
-      case 1:
-        {
-          this.status = 0;
-        }
-        break;
-      default:
-        {}
-    }
   }
 
   static List encondeTroopsToJson(List<User> list) {

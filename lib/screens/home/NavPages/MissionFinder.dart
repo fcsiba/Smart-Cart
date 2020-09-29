@@ -331,19 +331,19 @@ class _MissionFinderState extends State<MissionFinder> {
     )));
   }
 
-  void _handleTap(LatLng point) {
-    setState(() {
-      // Set Camera location to this point
-      _cameraMarker.add(new Marker(
-        markerId: MarkerId('cameraMarker'),
-        position: point,
-        infoWindow: InfoWindow(
-          title: 'Create Mission Here',
-        ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-      ));
-    });
-  }
+  // void _handleTap(LatLng point) {
+  //   setState(() {
+  //     // Set Camera location to this point
+  //     _cameraMarker.add(new Marker(
+  //       markerId: MarkerId('cameraMarker'),
+  //       position: point,
+  //       infoWindow: InfoWindow(
+  //         title: 'Create Mission Here',
+  //       ),
+  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+  //     ));
+  //   });
+  // }
 
   void _onAddMarkerButtonPressed() {
     if (_cameraMarker.isEmpty) {
