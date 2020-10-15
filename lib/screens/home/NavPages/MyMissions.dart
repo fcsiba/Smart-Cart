@@ -132,7 +132,7 @@ class _MyMissionsState extends State<MyMissions> {
                 ),
                 key: Key(mission.missionID),
                 onDismissed: (direction) {
-                  mission.troops.removeWhere((t) => t.email == user.email);
+                  mission.troops.removeWhere((t) => t.uid == user.uid);
                   MissionApi().updateMissionByName(mission, mission.missionID);
                 },
                 background: Container(
