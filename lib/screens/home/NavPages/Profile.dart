@@ -11,8 +11,9 @@ import 'package:trash_troopers/services/user_api.dart';
 import 'package:trash_troopers/services/auth_api.dart';
 
 class Profile extends StatefulWidget {
-  Profile({Key key}) : super(key: key);
-
+  Profile({Key key, this.isOrganization = false}) : super(key: key);
+  final bool isOrganization;
+  
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -237,7 +238,7 @@ class _ProfileState extends State<Profile> {
       ),
       onPressed: () async {
         await AuthApi().signOut();
-        Navigator.of(context).pop();
+        if (this.widget.isOrganization) Navigator.of(context).pop();
       },
       elevation: 4.0,
     );

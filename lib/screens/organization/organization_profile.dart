@@ -19,7 +19,9 @@ class _MyOrgProfileState extends State<MyOrgProfile> {
         ),
       ),
       body: Container(
-        child: Profile(),
+        child: Profile(
+          isOrganization: true,
+        ),
       ),
     );
   }
