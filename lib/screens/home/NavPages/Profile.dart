@@ -67,7 +67,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
-    _userID = Provider.of<User>(context).uid;
+    _userID = Provider.of<User>(context)?.uid;
     return StreamBuilder(
         stream: UserApi(uid: _userID).fetchUserAsStream(),
         builder: (context, snapshot) {
@@ -237,6 +237,7 @@ class _ProfileState extends State<Profile> {
       ),
       onPressed: () async {
         await AuthApi().signOut();
+        Navigator.of(context).pop();
       },
       elevation: 4.0,
     );
