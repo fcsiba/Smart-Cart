@@ -169,7 +169,7 @@ class _MissionFormState extends State<MissionForm> {
                                     latitude: widget.location.latitude,
                                     longitude: widget.location.longitude,
                                     troops: this.widget.oldMission.troops,
-                                    siteImage: this.widget.oldMission.siteImage,
+                                    siteImage: _uploadedFileUrl ?? _dummyImage,
                                     dangerLevel: trashLevel,
                                     status: this.widget.oldMission.status,
                                     expectedCapacity: requiredTroops,
