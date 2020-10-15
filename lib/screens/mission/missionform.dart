@@ -176,6 +176,7 @@ class _MissionFormState extends State<MissionForm> {
                                     leader: this.widget.oldMission.leader,
                                     createdAt: this.widget.oldMission.createdAt,
                                     updatedAt: Timestamp.now(),
+                                    docID: this.widget.oldMission.docID,
                                   );
 
                                   MissionApi().updateMissionByName(

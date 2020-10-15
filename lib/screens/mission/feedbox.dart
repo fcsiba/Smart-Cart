@@ -26,8 +26,8 @@ class _FeedBoxState extends State<FeedBox> {
 
   @override
   void get initState {
-    _mission = widget.mission;
-    _user = widget.user;
+    _mission = this.widget.mission;
+    _user = this.widget.user;
     _scrollController = new ScrollController();
     super.initState;
   }
@@ -37,10 +37,13 @@ class _FeedBoxState extends State<FeedBox> {
     myFeed.dateTime = DateTime.now();
     myFeed.user = _user;
     myFeed.description = myController.value.text;
+
     MissionApi().addMissionFeed(_mission, myFeed);
     myController.text = '';
-    _scrollController.animateTo(0,
-        duration: new Duration(seconds: 1), curve: Curves.ease);
+    try {
+      _scrollController.animateTo(0,
+          duration: new Duration(seconds: 1), curve: Curves.ease);
+    } catch (e) {}
   }
 
   @override
