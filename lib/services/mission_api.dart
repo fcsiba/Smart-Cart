@@ -123,6 +123,39 @@ class MissionApi {
   }
 
   Future removeMission(String id) async {
+    // Remove Mission feed and ratings sub-collection
+    try {
+      print("trying to remove the stuff");
+
+      await this
+          ._missionApi
+          .db
+          .collection("missions")
+          .document(id)
+          .collection("missionFeeds")
+          .getDocuments()
+          .then((querySnapshot) {
+        querySnapshot.documents.forEach((documentSnapshot) {
+          documentSnapshot.reference.delete();
+        });
+      });
+      
+      await this
+          ._missionApi
+          .db
+          .collection("missions")
+          .document(id)
+          .collection("missionRatings")
+          .getDocuments()
+          .then((querySnapshot) {
+        querySnapshot.documents.forEach((documentSnapshot) {
+          documentSnapshot.reference.delete();
+        });
+      });
+    } catch (error) {
+      print("Error: " + error);
+    }
+
     await _missionApi.removeDocument(id);
     return;
   }
