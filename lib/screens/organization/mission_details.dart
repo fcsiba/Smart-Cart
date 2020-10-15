@@ -22,6 +22,7 @@ class _MissionDetailsState extends State<MissionDetails> {
   @override
   Widget build(BuildContext context) {
     Mission myMission = this.widget.mission;
+    _currentStep = this.widget.mission.status;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
