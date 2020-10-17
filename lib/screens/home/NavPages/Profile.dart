@@ -11,9 +11,10 @@ import 'package:trash_troopers/services/user_api.dart';
 import 'package:trash_troopers/services/auth_api.dart';
 
 class Profile extends StatefulWidget {
-  Profile({Key key, this.isOrganization = false}) : super(key: key);
+  Profile({Key key, this.isOrganization = false, this.user})
+      : super(key: key);
   final bool isOrganization;
-  
+  final User user;
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -68,7 +69,9 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
-    _userID = Provider.of<User>(context)?.uid;
+    // If don't get userID from Provider get it from Props
+    _userID = Provider.of<User>(context)?.uid ?? this.widget.user.uid;
+
     return StreamBuilder(
         stream: UserApi(uid: _userID).fetchUserAsStream(),
         builder: (context, snapshot) {
